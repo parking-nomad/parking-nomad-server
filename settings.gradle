@@ -1,0 +1,3 @@
+rootProject.name = 'parking-nomad-server'
+include 'discovery-server'
+
