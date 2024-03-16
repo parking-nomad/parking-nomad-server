@@ -3,4 +3,5 @@ include 'discovery-server'
 include 'api-gateway'
 include 'member-service'
 include 'common-module'
+include 'parking-service'
 
