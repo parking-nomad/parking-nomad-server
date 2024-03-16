@@ -2,4 +2,5 @@ rootProject.name = 'parking-nomad-server'
 include 'discovery-server'
 include 'api-gateway'
 include 'member-service'
+include 'common-module'
 

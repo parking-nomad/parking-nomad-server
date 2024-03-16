@@ -1,10 +1,10 @@
 package parkingnomad.application.port.out.persistence;
 
-import parkingnomad.domain.Member;
-import parkingnomad.support.BaseTestWithContainers;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import parkingnomad.domain.Member;
+import parkingnomad.support.BaseTestWithContainers;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.SoftAssertions.assertSoftly;
