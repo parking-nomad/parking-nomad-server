@@ -47,6 +47,7 @@ public class Parking {
     public Long getMemberId() {
         return memberId;
     }
+
     public String getAddress() {
         return address;
     }
