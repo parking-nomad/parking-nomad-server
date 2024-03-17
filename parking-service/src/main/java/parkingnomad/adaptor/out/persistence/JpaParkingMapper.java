@@ -1,0 +1,31 @@
+package parkingnomad.adaptor.out.persistence;
+
+import org.locationtech.jts.geom.Coordinate;
+import org.locationtech.jts.geom.GeometryFactory;
+import org.locationtech.jts.geom.Point;
+import org.springframework.stereotype.Component;
+import parkingnomad.domain.Parking;
+
+@Component
+public class JpaParkingMapper {
+
+    private static final GeometryFactory GEOMETRY_FACTORY = new GeometryFactory();
+
+    public Parking toDomainEntity(final JpaParkingEntity jpaParkingEntity) {
+        return Parking.createWithId(
+                jpaParkingEntity.getId(),
+                jpaParkingEntity.getMemberId(),
+                jpaParkingEntity.getCoordinate().getY(),
+                jpaParkingEntity.getCoordinate().getX(),
+                jpaParkingEntity.getAddress(),
+                jpaParkingEntity.getCreatedAt(),
+                jpaParkingEntity.getUpdatedAt()
+        );
+    }
+
+    public JpaParkingEntity toJpaEntity(final Parking parking) {
+        final Coordinate coordinate = new Coordinate(parking.getLongitude(), parking.getLatitude());
+        final Point point = GEOMETRY_FACTORY.createPoint(coordinate);
+        return new JpaParkingEntity(parking.getMemberId(), point, parking.getAddress());
+    }
+}

@@ -13,6 +13,9 @@ dependencies {
     // common
     implementation(project(':common-module'))
     testImplementation(testFixtures(project(':common-module')))
+
+    // spatial
+    implementation 'org.hibernate.orm:hibernate-spatial:6.4.4.Final'
 }
 
 test {
