@@ -3,6 +3,8 @@ package parkingnomad.domain;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import java.time.LocalDateTime;
+
 import static org.assertj.core.api.SoftAssertions.assertSoftly;
 
 class ParkingTest {
@@ -38,9 +40,10 @@ class ParkingTest {
         int latitude = 20;
         int longitude = 30;
         String address = "address";
+        final LocalDateTime date = LocalDateTime.now();
 
         //when
-        Parking parking = Parking.createWithId(id, memberId, latitude, longitude, address);
+        Parking parking = Parking.createWithId(id, memberId, latitude, longitude, address, date, date);
 
         //then
         assertSoftly(softAssertions -> {
@@ -49,6 +52,8 @@ class ParkingTest {
             softAssertions.assertThat(parking.getAddress()).isEqualTo(address);
             softAssertions.assertThat(parking.getLatitude()).isEqualTo(latitude);
             softAssertions.assertThat(parking.getLongitude()).isEqualTo(longitude);
+            softAssertions.assertThat(parking.getCreatedAt()).isEqualTo(date);
+            softAssertions.assertThat(parking.getUpdatedAt()).isEqualTo(date);
         });
     }
 }
