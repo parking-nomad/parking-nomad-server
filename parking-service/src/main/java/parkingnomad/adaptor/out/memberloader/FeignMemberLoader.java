@@ -19,7 +19,7 @@ public class FeignMemberLoader implements MemberLoader {
     @Override
     public boolean isExistedMember(final Long memberId) {
         try {
-            MemberResponse memberResponse = memberLoaderAdaptor.findMemberById(memberId);
+            MemberResponse memberResponse = memberLoaderAdaptor.findMemberById(memberId, memberId);
             return !isNull(memberResponse);
         } catch (FeignException.FeignClientException exception) {
             return false;

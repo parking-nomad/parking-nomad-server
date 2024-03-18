@@ -4,10 +4,12 @@ import jakarta.persistence.*;
 import org.locationtech.jts.geom.Point;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDateTime;
 
 @Entity(name = "parkings")
+@EntityListeners(AuditingEntityListener.class)
 public class JpaParkingEntity {
 
     @Id
