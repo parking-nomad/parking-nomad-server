@@ -27,7 +27,7 @@ public class JpaParkingEntity {
 
     @LastModifiedDate
     @Column(name = "updated_at")
-    private LocalDateTime updatedAt;;
+    private LocalDateTime updatedAt;
 
     protected JpaParkingEntity() {
     }
