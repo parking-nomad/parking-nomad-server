@@ -2,14 +2,26 @@ package parkingnomad.application.port.in.dto;
 
 import parkingnomad.domain.Parking;
 
-public record ParkingResponse(Long id, Long memberId, double latitude, double longitude, String address) {
+import java.time.LocalDateTime;
+
+public record ParkingResponse(
+        Long id,
+        Long memberId,
+        double latitude,
+        double longitude,
+        String address,
+        LocalDateTime createdAt,
+        LocalDateTime updatedAt
+) {
     public static ParkingResponse from(final Parking parking) {
         return new ParkingResponse(
                 parking.getId(),
                 parking.getMemberId(),
                 parking.getLatitude(),
                 parking.getLongitude(),
-                parking.getAddress()
+                parking.getAddress(),
+                parking.getCreatedAt(),
+                parking.getUpdatedAt()
         );
     }
 }
