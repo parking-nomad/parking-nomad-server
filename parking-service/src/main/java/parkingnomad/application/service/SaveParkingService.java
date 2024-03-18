@@ -1,7 +1,7 @@
 package parkingnomad.application.service;
 
-import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import parkingnomad.application.port.in.SaveParkingUseCase;
 import parkingnomad.application.port.in.dto.SaveParkingRequest;
 import parkingnomad.application.port.out.AddressLocator;
