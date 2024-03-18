@@ -1,5 +1,7 @@
 package parkingnomad.application.port.out;
 
+import java.util.Optional;
+
 public interface AddressLocator {
-    String convertToAddress(final double latitude, final double longitude);
+    Optional<String> convertToAddress(final double latitude, final double longitude);
 }

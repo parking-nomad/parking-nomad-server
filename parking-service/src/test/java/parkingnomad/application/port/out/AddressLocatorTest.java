@@ -5,6 +5,8 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import parkingnomad.support.BaseTest;
 
+import java.util.Optional;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
 class AddressLocatorTest extends BaseTest {
@@ -21,9 +23,23 @@ class AddressLocatorTest extends BaseTest {
         double longitude = 127.423084873712;
 
         //when
-        String result = addressLocator.convertToAddress(latitude, longitude);
+        String result = addressLocator.convertToAddress(latitude, longitude).get();
 
         //then
         assertThat(result).isEqualTo(address);
+    }
+
+    @Test
+    @DisplayName("좌표에 해당하는 주소를 찾지 못하는 경우 빈 Optional.empty를 반환한다.")
+    void convertToAddressFail() {
+        //given
+        final double latitude = 40.748817;
+        final double longitude = -73.985428;
+
+        //when
+        final Optional<String> result = addressLocator.convertToAddress(latitude, longitude);
+
+        //then
+        assertThat(result).isEmpty();
     }
 }

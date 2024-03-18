@@ -4,6 +4,8 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import parkingnomad.application.port.out.AddressLocator;
 
+import java.util.Optional;
+
 @Component
 public class KakaoAddressLocator implements AddressLocator {
 
@@ -20,7 +22,7 @@ public class KakaoAddressLocator implements AddressLocator {
     }
 
     @Override
-    public String convertToAddress(double latitude, double longitude) {
+    public Optional<String> convertToAddress(double latitude, double longitude) {
         String header = authorizationPrefix + " " + clientId;
         KakaoAddressResponse responses = kakaoAddressLocatorAdaptor.getAddress(header, latitude, longitude);
         return responses.getAddressName();
