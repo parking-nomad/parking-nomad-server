@@ -1,4 +1,4 @@
-package parkingnomad.exception.auth;
+package parkingnomad.exception;
 
 public class InvalidRefreshTokenException extends AuthException {
 

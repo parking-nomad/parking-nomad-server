@@ -6,11 +6,12 @@ import parkingnomad.application.port.in.usecase.RefreshTokensUseCase;
 import parkingnomad.application.port.in.usecase.dto.TokenResponse;
 import parkingnomad.application.port.out.persistence.MemberRepository;
 import parkingnomad.application.port.out.persistence.RefreshTokenRepository;
-import parkingnomad.exception.auth.InvalidRefreshTokenException;
+import parkingnomad.exception.InvalidRefreshTokenException;
 import parkingnomad.exception.member.NonExistentMemberException;
+import parkingnomad.jwt.TokenParser;
 
 import static org.apache.logging.log4j.util.Strings.isBlank;
-import static parkingnomad.exception.auth.AuthExceptionCode.INVALID_REFRESH_TOKEN;
+import static parkingnomad.exception.AuthExceptionCode.INVALID_REFRESH_TOKEN;
 import static parkingnomad.exception.member.MemberExceptionCode.NON_EXISTENT_MEMBER;
 
 @Service

@@ -1,7 +1,5 @@
-package parkingnomad.application.service;
+package parkingnomad.jwt;
 
-import parkingnomad.exception.auth.ExpiredAccessTokenException;
-import parkingnomad.exception.auth.InvalidAccessTokenException;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.JwtBuilder;
 import io.jsonwebtoken.Jwts;
@@ -10,14 +8,17 @@ import io.jsonwebtoken.security.Keys;
 import io.jsonwebtoken.security.SignatureException;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
+import parkingnomad.exception.ExpiredAccessTokenException;
+import parkingnomad.exception.InvalidAccessTokenException;
 
 import javax.crypto.SecretKey;
 import java.nio.charset.StandardCharsets;
 import java.util.Date;
 import java.util.UUID;
 
-import static parkingnomad.exception.auth.AuthExceptionCode.EXPIRED_ACCESS_TOKEN;
-import static parkingnomad.exception.auth.AuthExceptionCode.INVALID_ACCESS_TOKEN;
+import static parkingnomad.exception.AuthExceptionCode.EXPIRED_ACCESS_TOKEN;
+import static parkingnomad.exception.AuthExceptionCode.INVALID_ACCESS_TOKEN;
+
 
 @Component
 public class TokenParser {
@@ -51,8 +52,6 @@ public class TokenParser {
         } catch (SignatureException exception) {
             throw new InvalidAccessTokenException(INVALID_ACCESS_TOKEN.getCode());
         }
-
-
     }
 
     private JwtBuilder builder(final long expired) {

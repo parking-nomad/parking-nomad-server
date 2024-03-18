@@ -1,4 +1,4 @@
-package parkingnomad.exception.auth;
+package parkingnomad.exception;
 
 public class InvalidAccessTokenException extends AuthException {
     public InvalidAccessTokenException(final String code) {

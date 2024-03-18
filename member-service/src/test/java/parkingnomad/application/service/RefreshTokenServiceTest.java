@@ -1,18 +1,19 @@
 package parkingnomad.application.service;
 
-import parkingnomad.exception.auth.InvalidRefreshTokenException;
-import parkingnomad.exception.member.NonExistentMemberException;
-import parkingnomad.application.port.in.usecase.dto.TokenResponse;
-import parkingnomad.application.port.out.persistence.MemberRepository;
-import parkingnomad.application.port.out.persistence.RefreshTokenRepository;
-import parkingnomad.domain.Member;
-import parkingnomad.support.BaseTestWithContainers;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.NullAndEmptySource;
 import org.junit.jupiter.params.provider.ValueSource;
 import org.springframework.beans.factory.annotation.Autowired;
+import parkingnomad.application.port.in.usecase.dto.TokenResponse;
+import parkingnomad.application.port.out.persistence.MemberRepository;
+import parkingnomad.application.port.out.persistence.RefreshTokenRepository;
+import parkingnomad.domain.Member;
+import parkingnomad.exception.InvalidRefreshTokenException;
+import parkingnomad.exception.member.NonExistentMemberException;
+import parkingnomad.jwt.TokenParser;
+import parkingnomad.support.BaseTestWithContainers;
 
 import java.util.Optional;
 

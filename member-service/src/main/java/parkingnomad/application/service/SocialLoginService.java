@@ -10,6 +10,7 @@ import parkingnomad.domain.Member;
 import parkingnomad.domain.UserInfo;
 import parkingnomad.domain.oauth.clients.OAuthClients;
 import parkingnomad.domain.oauth.provider.OAuthProvider;
+import parkingnomad.jwt.TokenParser;
 
 @Component
 @Transactional(readOnly = true)

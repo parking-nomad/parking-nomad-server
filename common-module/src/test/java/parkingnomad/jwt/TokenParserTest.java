@@ -1,9 +1,9 @@
-package parkingnomad.application.service;
+package parkingnomad.jwt;
 
-import parkingnomad.exception.auth.ExpiredAccessTokenException;
-import parkingnomad.exception.auth.InvalidAccessTokenException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import parkingnomad.exception.ExpiredAccessTokenException;
+import parkingnomad.exception.InvalidAccessTokenException;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -57,4 +57,5 @@ class TokenParserTest {
                 .isInstanceOf(InvalidAccessTokenException.class)
                 .hasMessage("유효하지 않은 access_token 입니다.");
     }
+
 }
