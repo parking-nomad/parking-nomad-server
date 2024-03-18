@@ -1,7 +1,8 @@
 package parkingnomad.exception.member;
 
 public enum MemberExceptionCode {
-    NON_EXISTENT_MEMBER("MEMBER0001");
+    NON_EXISTENT_MEMBER("MEMBER0001"),
+    INVALID_MEMBER_ACCESS_EXCEPTION("MEMBER0002");
 
     private final String code;
 

@@ -16,6 +16,7 @@ import parkingnomad.dto.member.MemberResponse;
 import parkingnomad.support.BaseTestWithContainers;
 
 import static io.restassured.RestAssured.given;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.SoftAssertions.assertSoftly;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.ArgumentMatchers.eq;
@@ -51,6 +52,7 @@ public class MemberAcceptanceTest extends BaseTestWithContainers {
         //when
         final ExtractableResponse<Response> response = given().log().all()
                 .pathParam("id", id)
+                .header("X-Member-Id", id)
                 .when()
                 .get("/api/members/{id}")
                 .then().log().all()
@@ -63,7 +65,45 @@ public class MemberAcceptanceTest extends BaseTestWithContainers {
             softAssertions.assertThat(memberResponse.id()).isEqualTo(id);
             softAssertions.assertThat(memberResponse.name()).isEqualTo(nickname);
         });
-
     }
 
+    @Test
+    @DisplayName("회원id와 일치하는 회원이 없는 경우 400을 응답한다.")
+    void findMemberFailNonExistent() {
+        //given
+        final Long id = 0L;
+
+        //when
+        final ExtractableResponse<Response> response = given().log().all()
+                .pathParam("id", id)
+                .header("X-Member-Id", id)
+                .when()
+                .get("/api/members/{id}")
+                .then().log().all()
+                .extract();
+
+        //then
+        assertThat(response.statusCode()).isEqualTo(HttpStatus.BAD_REQUEST.value());
+    }
+
+
+    @Test
+    @DisplayName("회원id와 로그인한 회원이 일치하지 않는 경우 403을 응답한다.")
+    void findMemberFailInvalidAccess() {
+        //given
+        final Long loginId = 0L;
+        final Long targetId = 1L;
+
+        //when
+        final ExtractableResponse<Response> response = given().log().all()
+                .pathParam("id", targetId)
+                .header("X-Member-Id", loginId)
+                .when()
+                .get("/api/members/{id}")
+                .then().log().all()
+                .extract();
+
+        //then
+        assertThat(response.statusCode()).isEqualTo(HttpStatus.FORBIDDEN.value());
+    }
 }
