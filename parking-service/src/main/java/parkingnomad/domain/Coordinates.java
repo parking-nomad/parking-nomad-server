@@ -2,8 +2,8 @@ package parkingnomad.domain;
 
 import parkingnomad.exception.InvalidCoordinatesException;
 
-import static parkingnomad.exception.CoordinatesExceptionCode.INVALID_LATITUDE;
-import static parkingnomad.exception.CoordinatesExceptionCode.INVALID_LONGITUDE;
+import static parkingnomad.exception.CoordinatesErrorCode.INVALID_LATITUDE;
+import static parkingnomad.exception.CoordinatesErrorCode.INVALID_LONGITUDE;
 
 public class Coordinates {
     private static final int MINIMUM_LATITUDE = -90;
