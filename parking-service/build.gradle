@@ -23,6 +23,9 @@ dependencies {
 
     // spatial
     implementation 'org.hibernate.orm:hibernate-spatial:6.4.4.Final'
+
+    // resilience4j
+    implementation 'org.springframework.cloud:spring-cloud-starter-circuitbreaker-resilience4j'
 }
 
 test {

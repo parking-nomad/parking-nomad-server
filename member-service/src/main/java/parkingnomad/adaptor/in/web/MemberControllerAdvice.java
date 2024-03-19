@@ -26,6 +26,6 @@ public class MemberControllerAdvice {
     @ExceptionHandler
     public ResponseEntity<ErrorResponse> handleUnexpectedException(final Exception exception) {
         final ErrorResponse errorResponse = ErrorResponse.internalServerError(exception.getMessage());
-        return ResponseEntity.badRequest().body(errorResponse);
+        return ResponseEntity.internalServerError().body(errorResponse);
     }
 }
