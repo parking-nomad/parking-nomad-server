@@ -6,6 +6,8 @@ import parkingnomad.application.port.in.SaveParkingUseCase;
 import parkingnomad.application.port.in.dto.SaveParkingRequest;
 import parkingnomad.application.port.out.AddressLocator;
 import parkingnomad.application.port.out.MemberLoader;
+import parkingnomad.application.port.out.event.ParkingCrateEvent;
+import parkingnomad.application.port.out.event.ParkingCreateEventPublisher;
 import parkingnomad.application.port.out.persistence.ParkingRepository;
 import parkingnomad.domain.Parking;
 import parkingnomad.exception.InvalidMemberIdException;
@@ -21,15 +23,18 @@ public class SaveParkingService implements SaveParkingUseCase {
     private final MemberLoader memberLoader;
     private final ParkingRepository parkingRepository;
     private final AddressLocator addressLocator;
+    private final ParkingCreateEventPublisher publisher;
 
     public SaveParkingService(
             final MemberLoader memberLoader,
             final ParkingRepository parkingRepository,
-            final AddressLocator addressLocator
+            final AddressLocator addressLocator,
+            final ParkingCreateEventPublisher publisher
     ) {
         this.memberLoader = memberLoader;
         this.parkingRepository = parkingRepository;
         this.addressLocator = addressLocator;
+        this.publisher = publisher;
     }
 
     @Override
@@ -39,7 +44,9 @@ public class SaveParkingService implements SaveParkingUseCase {
         final double longitude = saveParkingRequest.longitude();
         final String address = getAddressOrThrow(latitude, longitude);
         final Parking parking = Parking.createWithoutId(memberId, latitude, longitude, address);
-        return parkingRepository.save(parking).getId();
+        final Long savedId = parkingRepository.save(parking).getId();
+        publisher.publish(new ParkingCrateEvent(savedId));
+        return savedId;
     }
 
     private String getAddressOrThrow(final double latitude, final double longitude) {
