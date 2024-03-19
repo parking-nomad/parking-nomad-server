@@ -1,4 +1,4 @@
-package parkingnomad.adaptor.out.persistence;
+package parkingnomad.adaptor.out.persistence.parking;
 
 import org.springframework.stereotype.Component;
 import parkingnomad.application.port.out.persistence.ParkingRepository;

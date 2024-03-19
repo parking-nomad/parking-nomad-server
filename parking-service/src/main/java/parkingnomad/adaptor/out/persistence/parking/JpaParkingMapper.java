@@ -1,4 +1,4 @@
-package parkingnomad.adaptor.out.persistence;
+package parkingnomad.adaptor.out.persistence.parking;
 
 import org.locationtech.jts.geom.Coordinate;
 import org.locationtech.jts.geom.GeometryFactory;
