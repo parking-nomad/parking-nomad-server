@@ -47,7 +47,7 @@ class SaveParkingUseCaseTest extends BaseTestWithContainers {
         when(memberLoader.isExistedMember(anyLong())).thenReturn(true);
 
         //when
-        final Long savedId = saveParkingUseCase.saveParking(new SaveParkingRequest(memberId, latitude, longitude));
+        final Long savedId = saveParkingUseCase.saveParking(memberId, new SaveParkingRequest(latitude, longitude));
 
         //then
         final Parking parking = parkingRepository.findById(savedId).get();
@@ -70,10 +70,10 @@ class SaveParkingUseCaseTest extends BaseTestWithContainers {
         final int longitude = 30;
         when(addressLocator.convertToAddress(anyDouble(), anyDouble())).thenReturn(Optional.of(address));
         when(memberLoader.isExistedMember(anyLong())).thenReturn(false);
-        final SaveParkingRequest saveParkingRequest = new SaveParkingRequest(memberId, latitude, longitude);
+        final SaveParkingRequest saveParkingRequest = new SaveParkingRequest(latitude, longitude);
 
         //when & then
-        assertThatThrownBy(() -> saveParkingUseCase.saveParking(saveParkingRequest))
+        assertThatThrownBy(() -> saveParkingUseCase.saveParking(memberId, saveParkingRequest))
                 .isInstanceOf(InvalidMemberIdException.class)
                 .hasMessageContaining("member_id가 유효하지 않습니다.");
     }
@@ -88,10 +88,10 @@ class SaveParkingUseCaseTest extends BaseTestWithContainers {
         final long memberId = 1L;
         final double latitude = 40.748817;
         final double longitude = -73.985428;
-        final SaveParkingRequest saveParkingRequest = new SaveParkingRequest(memberId, latitude, longitude);
+        final SaveParkingRequest saveParkingRequest = new SaveParkingRequest(latitude, longitude);
 
         //when & then
-        assertThatThrownBy(() -> saveParkingUseCase.saveParking(saveParkingRequest))
+        assertThatThrownBy(() -> saveParkingUseCase.saveParking(memberId, saveParkingRequest))
                 .isInstanceOf(LocationSearchException.class)
                 .hasMessageContaining("좌표에 해당하는 주소를 찾을 수 없습니다.");
     }

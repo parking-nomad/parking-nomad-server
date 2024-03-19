@@ -1,4 +1,4 @@
 package parkingnomad.application.port.in.dto;
 
-public record SaveParkingRequest(Long memberId, double latitude, double longitude) {
+public record SaveParkingRequest(double latitude, double longitude) {
 }

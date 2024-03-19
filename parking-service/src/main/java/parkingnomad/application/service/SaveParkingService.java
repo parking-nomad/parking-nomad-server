@@ -33,8 +33,7 @@ public class SaveParkingService implements SaveParkingUseCase {
     }
 
     @Override
-    public Long saveParking(final SaveParkingRequest saveParkingRequest) {
-        final Long memberId = saveParkingRequest.memberId();
+    public Long saveParking(final Long memberId, final SaveParkingRequest saveParkingRequest) {
         validateMemberId(memberId);
         final double latitude = saveParkingRequest.latitude();
         final double longitude = saveParkingRequest.longitude();

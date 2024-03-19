@@ -65,7 +65,8 @@ public class ParkingAcceptanceTest extends BaseTestWithContainers {
         //when
         return given().log().all()
                 .contentType(ContentType.JSON)
-                .body(new SaveParkingRequest(memberId, latitude, longitude))
+                .header("X-Member-Id", memberId)
+                .body(new SaveParkingRequest(latitude, longitude))
                 .when().post("/api/parkings")
                 .then().log().all()
                 .extract();

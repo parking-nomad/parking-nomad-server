@@ -6,6 +6,7 @@ import parkingnomad.application.port.in.FindParkingByIdUseCase;
 import parkingnomad.application.port.in.SaveParkingUseCase;
 import parkingnomad.application.port.in.dto.ParkingResponse;
 import parkingnomad.application.port.in.dto.SaveParkingRequest;
+import parkingnomad.resolver.auth.AuthMember;
 
 import java.net.URI;
 
@@ -24,8 +25,11 @@ public class ParkingController {
     }
 
     @PostMapping
-    public ResponseEntity<Void> saveParking(@RequestBody final SaveParkingRequest saveParkingRequest) {
-        final Long savedId = saveParkingUseCase.saveParking(saveParkingRequest);
+    public ResponseEntity<Void> saveParking(
+            @AuthMember final Long memberId,
+            @RequestBody final SaveParkingRequest saveParkingRequest
+    ) {
+        final Long savedId = saveParkingUseCase.saveParking(memberId, saveParkingRequest);
         return ResponseEntity.created(URI.create("/api/parkings/" + savedId)).build();
     }
 
