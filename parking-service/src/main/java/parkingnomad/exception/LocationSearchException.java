@@ -1,5 +1,7 @@
 package parkingnomad.exception;
 
+import parkingnomad.exception.base.BadRequestException;
+
 public class LocationSearchException extends BadRequestException {
     public LocationSearchException(
             final CoordinatesErrorCode coordinatesErrorCode,

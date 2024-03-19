@@ -1,6 +1,6 @@
 package parkingnomad.exception.member;
 
-import parkingnomad.exception.BadRequestException;
+import parkingnomad.exception.base.BadRequestException;
 
 public class NonExistentMemberException extends BadRequestException {
 

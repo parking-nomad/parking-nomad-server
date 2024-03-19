@@ -11,8 +11,8 @@ import org.springframework.http.server.reactive.ServerHttpResponse;
 import org.springframework.stereotype.Component;
 import org.springframework.web.server.ServerWebExchange;
 import parkingnomad.dto.error.ErrorResponse;
-import parkingnomad.exception.AuthException;
 import parkingnomad.exception.InvalidTokenFormatException;
+import parkingnomad.exception.base.AuthException;
 import parkingnomad.jwt.TokenParser;
 import reactor.core.publisher.Mono;
 

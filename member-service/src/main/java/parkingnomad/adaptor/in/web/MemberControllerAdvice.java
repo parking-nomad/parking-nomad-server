@@ -5,8 +5,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import parkingnomad.dto.error.ErrorResponse;
-import parkingnomad.exception.BadRequestException;
-import parkingnomad.exception.ForbiddenException;
+import parkingnomad.exception.base.BadRequestException;
+import parkingnomad.exception.base.ForbiddenException;
 
 @ControllerAdvice
 public class MemberControllerAdvice {

@@ -1,5 +1,7 @@
 package parkingnomad.exception;
 
+import parkingnomad.exception.base.BadRequestException;
+
 public class InvalidCoordinatesException extends BadRequestException {
 
     private final static String ADDITIONAL_EXCEPTION_INFORMATION = "{ invalid_value: %.6f }";

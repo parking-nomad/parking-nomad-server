@@ -1,4 +1,4 @@
-package parkingnomad.exception;
+package parkingnomad.exception.base;
 
 public abstract class AuthException extends RuntimeException {
     protected final String code;

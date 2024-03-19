@@ -1,5 +1,7 @@
 package parkingnomad.exception;
 
+import parkingnomad.exception.base.AuthException;
+
 public class ExpiredAccessTokenException extends AuthException {
     public ExpiredAccessTokenException(final String code) {
         super(code);

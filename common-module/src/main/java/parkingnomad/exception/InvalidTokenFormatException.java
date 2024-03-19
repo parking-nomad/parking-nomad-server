@@ -1,5 +1,7 @@
 package parkingnomad.exception;
 
+import parkingnomad.exception.base.AuthException;
+
 public class InvalidTokenFormatException extends AuthException {
     public InvalidTokenFormatException(final String code) {
         super(code);
