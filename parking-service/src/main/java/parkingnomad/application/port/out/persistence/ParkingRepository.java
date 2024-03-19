@@ -8,4 +8,6 @@ public interface ParkingRepository {
     Parking save(final Parking parking);
 
     Optional<Parking> findById(final Long id);
+
+    Optional<Parking> findByIdAndMemberId(final Long id, final Long memberId);
 }

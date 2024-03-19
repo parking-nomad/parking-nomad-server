@@ -2,7 +2,7 @@ package parkingnomad.adaptor.in.web;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import parkingnomad.application.port.in.FindParkingByIdUseCase;
+import parkingnomad.application.port.in.FindParkingByIdAndMemberIdUseCase;
 import parkingnomad.application.port.in.SaveParkingUseCase;
 import parkingnomad.application.port.in.dto.ParkingResponse;
 import parkingnomad.application.port.in.dto.SaveParkingRequest;
@@ -14,14 +14,14 @@ import java.net.URI;
 @RequestMapping("/api/parkings")
 public class ParkingController {
     private final SaveParkingUseCase saveParkingUseCase;
-    private final FindParkingByIdUseCase findParkingByIdUseCase;
+    private final FindParkingByIdAndMemberIdUseCase findParkingByIdAndMemberIdUseCase;
 
     public ParkingController(
             final SaveParkingUseCase saveParkingUseCase,
-            final FindParkingByIdUseCase findParkingByIdUseCase
+            final FindParkingByIdAndMemberIdUseCase findParkingByIdAndMemberIdUseCase
     ) {
         this.saveParkingUseCase = saveParkingUseCase;
-        this.findParkingByIdUseCase = findParkingByIdUseCase;
+        this.findParkingByIdAndMemberIdUseCase = findParkingByIdAndMemberIdUseCase;
     }
 
     @PostMapping
@@ -34,8 +34,11 @@ public class ParkingController {
     }
 
     @GetMapping("{id}")
-    public ResponseEntity<ParkingResponse> findParking(@PathVariable final Long id) {
-        final ParkingResponse response = findParkingByIdUseCase.findParkingById(id);
+    public ResponseEntity<ParkingResponse> findParkingById(
+            @PathVariable final Long id,
+            @AuthMember final Long memberId
+    ) {
+        final ParkingResponse response = findParkingByIdAndMemberIdUseCase.findParkingByIdAndMemberId(id, memberId);
         return ResponseEntity.ok(response);
     }
 }

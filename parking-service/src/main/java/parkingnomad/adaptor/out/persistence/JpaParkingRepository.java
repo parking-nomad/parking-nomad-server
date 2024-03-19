@@ -35,4 +35,14 @@ public class JpaParkingRepository implements ParkingRepository {
         }
         return Optional.of(mapper.toDomainEntity(jpaParkingEntity));
     }
+
+    @Override
+    public Optional<Parking> findByIdAndMemberId(final Long id, final Long memberId) {
+        final JpaParkingEntity jpaParkingEntity = parkings.findJpaParkingEntityByIdAndMemberId(id, memberId)
+                .orElse(null);
+        if (isNull(jpaParkingEntity)) {
+            return Optional.empty();
+        }
+        return Optional.of(mapper.toDomainEntity(jpaParkingEntity));
+    }
 }

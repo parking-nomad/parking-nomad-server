@@ -12,10 +12,10 @@ import parkingnomad.support.BaseTestWithContainers;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.assertj.core.api.SoftAssertions.assertSoftly;
 
-class FindParkingByIdUseCaseTest extends BaseTestWithContainers {
+class FindParkingByIdAndMemberIdUseCaseTest extends BaseTestWithContainers {
 
     @Autowired
-    FindParkingByIdUseCase useCase;
+    FindParkingByIdAndMemberIdUseCase useCase;
 
     @Autowired
     ParkingRepository parkingRepository;
@@ -31,7 +31,7 @@ class FindParkingByIdUseCaseTest extends BaseTestWithContainers {
         final Parking save = parkingRepository.save(Parking.createWithoutId(memberId, latitude, longitude, address));
 
         //when
-        final ParkingResponse found = useCase.findParkingById(save.getId());
+        final ParkingResponse found = useCase.findParkingByIdAndMemberId(save.getId(), memberId);
 
         //then
         assertSoftly(softAssertions -> {
@@ -48,9 +48,10 @@ class FindParkingByIdUseCaseTest extends BaseTestWithContainers {
     void findParkingFail() {
         //given
         final long invalidId = 0L;
+        final long memberId = 1L;
 
         //when & then
-        assertThatThrownBy(() -> useCase.findParkingById(invalidId))
+        assertThatThrownBy(() -> useCase.findParkingByIdAndMemberId(invalidId, memberId))
                 .isInstanceOf(NonExistentParkingException.class)
                 .hasMessageContaining("존재하지 않는 parkingId 입니다.");
     }

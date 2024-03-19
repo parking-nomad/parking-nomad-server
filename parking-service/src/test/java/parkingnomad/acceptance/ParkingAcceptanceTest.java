@@ -87,6 +87,7 @@ public class ParkingAcceptanceTest extends BaseTestWithContainers {
         //when
         final ExtractableResponse<Response> response = given().log().all()
                 .contentType(ContentType.JSON)
+                .header("X-Member-Id", memberId)
                 .pathParam("id", savedId)
                 .when().get("/api/parkings/{id}")
                 .then().log().all()
