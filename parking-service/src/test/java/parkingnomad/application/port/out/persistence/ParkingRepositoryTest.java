@@ -19,6 +19,14 @@ class ParkingRepositoryTest extends BaseTestWithContainers {
     @Autowired
     ParkingRepository parkingRepository;
 
+    private static Stream<Arguments> provideInvalidArgument() {
+        return Stream.of(
+                Arguments.of(0L, 0L),
+                Arguments.of(0L, 1L),
+                Arguments.of(1L, 0L)
+        );
+    }
+
     @Test
     @DisplayName("parking을 저장한다.")
     void save() {
@@ -41,14 +49,6 @@ class ParkingRepositoryTest extends BaseTestWithContainers {
             softAssertions.assertThat(foundParking.getLongitude()).isEqualTo(longitude);
             softAssertions.assertThat(foundParking.getAddress()).isEqualTo(address);
         });
-    }
-
-    private static Stream<Arguments> provideInvalidArgument() {
-        return Stream.of(
-                Arguments.of(0L, 0L),
-                Arguments.of(0L, 1L),
-                Arguments.of(1L, 0L)
-        );
     }
 
     @Test
@@ -90,6 +90,30 @@ class ParkingRepositoryTest extends BaseTestWithContainers {
         assertSoftly(softAssertions -> {
             softAssertions.assertThat(equality).isFalse();
             softAssertions.assertThat(found).isEmpty();
+        });
+    }
+
+    @Test
+    @DisplayName("memberId가 일치하는 parking 중 가장 최근에 생성된 parking을 조회한다.")
+    void findLatestParkingByMemberId() {
+        //given
+        parkingRepository.save(Parking.createWithoutId(1L, 20, 60, "address1"));
+        parkingRepository.save(Parking.createWithoutId(1L, 30, 70, "address2"));
+        parkingRepository.save(Parking.createWithoutId(2L, 50, 90, "address4"));
+        final Parking target = parkingRepository.save(Parking.createWithoutId(1L, 40, 80, "address3"));
+
+        //when
+        final Parking parking = parkingRepository.findLatestParkingByMemberId(1L).get();
+
+        //then
+        assertSoftly(softAssertions -> {
+            softAssertions.assertThat(parking.getId()).isEqualTo(target.getId());
+            softAssertions.assertThat(parking.getLatitude()).isEqualTo(target.getLatitude());
+            softAssertions.assertThat(parking.getLongitude()).isEqualTo(target.getLongitude());
+            softAssertions.assertThat(parking.getAddress()).isEqualTo(target.getAddress());
+            softAssertions.assertThat(parking.getMemberId()).isEqualTo(target.getMemberId());
+            softAssertions.assertThat(parking.getCreatedAt()).isEqualTo(target.getCreatedAt());
+            softAssertions.assertThat(parking.getUpdatedAt()).isEqualTo(target.getUpdatedAt());
         });
     }
 }

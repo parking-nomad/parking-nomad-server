@@ -6,4 +6,6 @@ import java.util.Optional;
 
 public interface JpaParkingRepositoryAdaptor extends JpaRepository<JpaParkingEntity, Long> {
     Optional<JpaParkingEntity> findJpaParkingEntityByIdAndMemberId(final Long id, final Long memberId);
+
+    Optional<JpaParkingEntity> findFirstByMemberIdOrderByCreatedAtDesc(final Long memberId);
 }

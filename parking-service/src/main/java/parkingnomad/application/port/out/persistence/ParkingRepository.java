@@ -10,4 +10,6 @@ public interface ParkingRepository {
     Optional<Parking> findById(final Long id);
 
     Optional<Parking> findByIdAndMemberId(final Long id, final Long memberId);
+
+    Optional<Parking> findLatestParkingByMemberId(final Long memberId);
 }

@@ -5,7 +5,9 @@ import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.Query;
 import jakarta.transaction.Transactional;
 import org.junit.jupiter.api.BeforeEach;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -22,6 +24,10 @@ public class DataInitializer {
 
     @PersistenceContext
     private EntityManager em;
+
+    @Autowired
+    private RedisTemplate<String, String> redisTemplate;
+
     private final List<String> tableNames = new ArrayList<>();
 
     @BeforeEach
@@ -34,6 +40,11 @@ public class DataInitializer {
         setForeignKeyEnabled(OFF);
         truncateAllTables();
         setForeignKeyEnabled(ON);
+        redisDeleteAll();
+    }
+
+    private void redisDeleteAll() {
+        redisTemplate.getConnectionFactory().getConnection().serverCommands().flushAll();
     }
 
     private void setForeignKeyEnabled(final int enabled) {
