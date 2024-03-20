@@ -4,5 +4,5 @@ import org.springframework.stereotype.Component;
 
 @Component
 public interface ParkingCreateEventPublisher {
-    void publish(final ParkingCrateEvent event);
+    void publish(final ParkingCreateEvent event);
 }

@@ -15,10 +15,10 @@ import java.time.LocalDateTime;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.assertj.core.api.SoftAssertions.assertSoftly;
 
-class FindLatestParkingByMemberIdTest extends BaseTestWithContainers {
+class FindLatestParkingByMemberIdUseCaseTest extends BaseTestWithContainers {
 
     @Autowired
-    FindLatestParkingByMemberId useCase;
+    FindLatestParkingByMemberIdUseCase useCase;
 
     @Autowired
     LatestParkingRepository latestParkingRepository;

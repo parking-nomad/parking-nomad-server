@@ -6,7 +6,7 @@ import parkingnomad.application.port.in.SaveParkingUseCase;
 import parkingnomad.application.port.in.dto.SaveParkingRequest;
 import parkingnomad.application.port.out.AddressLocator;
 import parkingnomad.application.port.out.MemberLoader;
-import parkingnomad.application.port.out.event.ParkingCrateEvent;
+import parkingnomad.application.port.out.event.ParkingCreateEvent;
 import parkingnomad.application.port.out.event.ParkingCreateEventPublisher;
 import parkingnomad.application.port.out.persistence.ParkingRepository;
 import parkingnomad.domain.Parking;
@@ -45,7 +45,7 @@ public class SaveParkingService implements SaveParkingUseCase {
         final String address = getAddressOrThrow(latitude, longitude);
         final Parking parking = Parking.createWithoutId(memberId, latitude, longitude, address);
         final Long savedId = parkingRepository.save(parking).getId();
-        publisher.publish(new ParkingCrateEvent(savedId));
+        publisher.publish(new ParkingCreateEvent(savedId, memberId));
         return savedId;
     }
 

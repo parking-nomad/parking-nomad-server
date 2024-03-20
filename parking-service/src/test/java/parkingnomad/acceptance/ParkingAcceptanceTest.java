@@ -72,6 +72,12 @@ public class ParkingAcceptanceTest extends BaseTestWithContainers {
                 .extract();
     }
 
+    private static String parseSavedParkingId(final ExtractableResponse<Response> savedParking) {
+        final String[] locations = savedParking.header("Location").split("/");
+        final String savedId = locations[locations.length - 1];
+        return savedId;
+    }
+
     @Test
     @DisplayName("parkingId를 통해 저장된 parking을 조회한다.")
     void findParkingById() {
@@ -81,8 +87,7 @@ public class ParkingAcceptanceTest extends BaseTestWithContainers {
         final int latitude = 40;
         final int longitude = 30;
         final ExtractableResponse<Response> savedParking = saveParking(address, memberId, latitude, longitude);
-        final String[] locations = savedParking.header("Location").split("/");
-        final String savedId = locations[locations.length - 1];
+        final String savedId = parseSavedParkingId(savedParking);
 
         //when
         final ExtractableResponse<Response> response = given().log().all()
@@ -102,6 +107,51 @@ public class ParkingAcceptanceTest extends BaseTestWithContainers {
             softAssertions.assertThat(parkingResponse.latitude()).isEqualTo(latitude);
             softAssertions.assertThat(parkingResponse.longitude()).isEqualTo(longitude);
             softAssertions.assertThat(parkingResponse.address()).isEqualTo(address);
+        });
+    }
+
+    @Test
+    @DisplayName("회원의 가장 최근 주차정보를 조회한다.")
+    void findLatestParkingByMemberId() throws InterruptedException {
+        //given
+        final long memberId = 1L;
+
+        final int latitude1 = 20;
+        final int longitude1 = 70;
+        final String address1 = "address1";
+        saveParking(address1, memberId, latitude1, longitude1);
+
+        final int latitude2 = 30;
+        final int longitude2 = 80;
+        final String address2 = "address2";
+        saveParking(address2, memberId, latitude2, longitude2);
+
+        final int latitude3 = 40;
+        final int longitude3 = 90;
+        final String address3 = "address3";
+        final ExtractableResponse<Response> target = saveParking(address3, memberId, latitude3, longitude3);
+        final long targetId = Long.parseLong(parseSavedParkingId(target));
+
+        saveParking(address2, 3L, 11, 22);
+        saveParking(address2, 4L, 33, 44);
+
+        //when
+        Thread.sleep(1000);
+        final ExtractableResponse<Response> response = given().log().all()
+                .header("X-Member-Id", memberId)
+                .when().get("/api/parkings/latest")
+                .then().log().all()
+                .extract();
+
+        //then
+        final ParkingResponse parkingResponse = response.as(ParkingResponse.class);
+        assertSoftly(softAssertions -> {
+            softAssertions.assertThat(response.statusCode()).isEqualTo(HttpStatus.OK.value());
+            softAssertions.assertThat(parkingResponse.id()).isEqualTo(targetId);
+            softAssertions.assertThat(parkingResponse.memberId()).isEqualTo(memberId);
+            softAssertions.assertThat(parkingResponse.latitude()).isEqualTo(latitude3);
+            softAssertions.assertThat(parkingResponse.longitude()).isEqualTo(longitude3);
+            softAssertions.assertThat(parkingResponse.address()).isEqualTo(address3);
         });
     }
 }

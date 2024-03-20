@@ -2,7 +2,7 @@ package parkingnomad.application.service;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import parkingnomad.application.port.in.FindLatestParkingByMemberId;
+import parkingnomad.application.port.in.FindLatestParkingByMemberIdUseCase;
 import parkingnomad.application.port.in.dto.ParkingResponse;
 import parkingnomad.application.port.out.persistence.LatestParkingRepository;
 import parkingnomad.application.port.out.persistence.ParkingRepository;
@@ -13,7 +13,7 @@ import static parkingnomad.exception.ParkingErrorCode.NON_EXISTENT_LATEST_PARKIN
 
 @Service
 @Transactional
-public class FindLatestParkingByMemberIdService implements FindLatestParkingByMemberId {
+public class FindLatestParkingByMemberIdService implements FindLatestParkingByMemberIdUseCase {
 
     private final LatestParkingRepository latestParkingRepository;
     private final ParkingRepository parkingRepository;

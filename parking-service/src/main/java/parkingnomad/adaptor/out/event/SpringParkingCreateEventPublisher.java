@@ -2,7 +2,7 @@ package parkingnomad.adaptor.out.event;
 
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Component;
-import parkingnomad.application.port.out.event.ParkingCrateEvent;
+import parkingnomad.application.port.out.event.ParkingCreateEvent;
 import parkingnomad.application.port.out.event.ParkingCreateEventPublisher;
 
 @Component
@@ -15,7 +15,7 @@ public class SpringParkingCreateEventPublisher implements ParkingCreateEventPubl
     }
 
     @Override
-    public void publish(final ParkingCrateEvent event) {
+    public void publish(final ParkingCreateEvent event) {
         applicationEventPublisher.publishEvent(event);
     }
 }
