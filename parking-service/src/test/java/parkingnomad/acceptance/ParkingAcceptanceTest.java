@@ -74,8 +74,7 @@ public class ParkingAcceptanceTest extends BaseTestWithContainers {
 
     private static String parseSavedParkingId(final ExtractableResponse<Response> savedParking) {
         final String[] locations = savedParking.header("Location").split("/");
-        final String savedId = locations[locations.length - 1];
-        return savedId;
+        return locations[locations.length - 1];
     }
 
     @Test
