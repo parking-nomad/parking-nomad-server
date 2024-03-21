@@ -1,6 +1,13 @@
 package parkingnomad.domain;
 
+import org.apache.logging.log4j.util.Strings;
+import parkingnomad.exception.InvalidFileNameException;
+import parkingnomad.exception.ParkingErrorCode;
+import parkingnomad.exception.ParkingImageAlreadyExists;
+
 import java.time.LocalDateTime;
+
+import static parkingnomad.exception.ParkingErrorCode.INVALID_FILE_NAME;
 
 public class Parking {
     private final Long id;
@@ -9,12 +16,14 @@ public class Parking {
     private final String address;
     private final LocalDateTime createdAt;
     private final LocalDateTime updatedAt;
+    private String image;
 
     public Parking(
             final Long id,
             final Long memberId,
             final Coordinates coordinates,
             final String address,
+            final String image,
             final LocalDateTime createdAt,
             final LocalDateTime updatedAt
     ) {
@@ -22,6 +31,7 @@ public class Parking {
         this.memberId = memberId;
         this.coordinates = coordinates;
         this.address = address;
+        this.image = image;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
     }
@@ -32,7 +42,7 @@ public class Parking {
             final double longitude,
             final String address
     ) {
-        return new Parking(null, memberId, Coordinates.from(latitude, longitude), address, null, null);
+        return new Parking(null, memberId, Coordinates.from(latitude, longitude), address, null, null, null);
     }
 
     public static Parking createWithId(
@@ -41,10 +51,21 @@ public class Parking {
             final double latitude,
             final double longitude,
             final String address,
+            final String image,
             final LocalDateTime createdAt,
             final LocalDateTime updatedAt
     ) {
-        return new Parking(id, memberId, Coordinates.from(latitude, longitude), address, createdAt, updatedAt);
+        return new Parking(id, memberId, Coordinates.from(latitude, longitude), address, image, createdAt, updatedAt);
+    }
+
+    public void addImageName(final String imageName) {
+        if (Strings.isBlank(imageName)) {
+            throw new InvalidFileNameException(INVALID_FILE_NAME, imageName);
+        }
+        if (!Strings.isBlank(image)) {
+            throw new ParkingImageAlreadyExists(ParkingErrorCode.IMAGE_ALREADY_EXISTS);
+        }
+        this.image = imageName;
     }
 
     public double getLatitude() {
@@ -65,6 +86,10 @@ public class Parking {
 
     public String getAddress() {
         return address;
+    }
+
+    public String getImage() {
+        return image;
     }
 
     public LocalDateTime getCreatedAt() {

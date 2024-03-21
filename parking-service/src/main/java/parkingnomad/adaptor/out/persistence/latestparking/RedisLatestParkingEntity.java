@@ -13,6 +13,7 @@ public record RedisLatestParkingEntity(
         String address,
         @Id
         Long memberId,
+        String image,
         LocalDateTime createdAt,
         LocalDateTime updatedAt
 ) {

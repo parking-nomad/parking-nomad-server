@@ -29,8 +29,9 @@ class DeleteLatestParkingByMemberIdUseCaseTest extends BaseTestWithContainers {
         final int latitude = 20;
         final int longitude = 30;
         final String address = "address";
+        final String image = "image";
         final LocalDateTime now = LocalDateTime.now();
-        final Parking parking = Parking.createWithId(id, memberId, latitude, longitude, address, now, now);
+        final Parking parking = Parking.createWithId(id, memberId, latitude, longitude, address, image, now, now);
         latestParkingRepository.saveLatestParking(parking);
 
         //when

@@ -12,6 +12,7 @@ public class RedisLatestParkingMapper {
                 parking.getLongitude(),
                 parking.getAddress(),
                 parking.getMemberId(),
+                parking.getImage(),
                 parking.getCreatedAt(),
                 parking.getUpdatedAt()
         );
@@ -24,6 +25,7 @@ public class RedisLatestParkingMapper {
                 redisEntity.latitude(),
                 redisEntity.longitude(),
                 redisEntity.address(),
+                redisEntity.image(),
                 redisEntity.createdAt(),
                 redisEntity.updatedAt()
         );

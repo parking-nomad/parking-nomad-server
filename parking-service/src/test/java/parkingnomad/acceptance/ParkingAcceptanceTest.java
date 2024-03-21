@@ -1,5 +1,7 @@
 package parkingnomad.acceptance;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
 import io.restassured.response.ExtractableResponse;
@@ -7,23 +9,27 @@ import io.restassured.response.Response;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.http.HttpStatus;
+import org.springframework.web.multipart.MultipartFile;
+import parkingnomad.MockParkingImageFile;
 import parkingnomad.application.port.in.dto.ParkingResponse;
 import parkingnomad.application.port.in.dto.SaveParkingRequest;
 import parkingnomad.application.port.out.AddressLocator;
+import parkingnomad.application.port.out.ImageUploader;
 import parkingnomad.application.port.out.MemberLoader;
 import parkingnomad.support.BaseTestWithContainers;
 
 import java.util.Optional;
 
 import static io.restassured.RestAssured.given;
+import static io.restassured.http.ContentType.MULTIPART;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.SoftAssertions.assertSoftly;
-import static org.mockito.ArgumentMatchers.anyDouble;
-import static org.mockito.ArgumentMatchers.anyLong;
+import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.when;
 import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.RANDOM_PORT;
 
@@ -33,43 +39,21 @@ public class ParkingAcceptanceTest extends BaseTestWithContainers {
     @LocalServerPort
     int port;
 
+    @Autowired
+    ObjectMapper objectMapper;
+
     @MockBean
     MemberLoader memberLoader;
 
     @MockBean
     AddressLocator addressLocator;
 
+    @MockBean
+    ImageUploader imageUploader;
+
     @BeforeEach
     void setUp() {
         RestAssured.port = port;
-    }
-
-    @Test
-    @DisplayName("parking을 저장한다.")
-    void saveParking() {
-        //given
-        final long memberId = 1L;
-        final int latitude = 20;
-        final int longitude = 30;
-        final String address = "address";
-        final ExtractableResponse<Response> response = saveParking(address, memberId, latitude, longitude);
-
-        //then
-        assertThat(response.statusCode()).isEqualTo(HttpStatus.CREATED.value());
-    }
-
-    private ExtractableResponse<Response> saveParking(final String address, final long memberId, final int latitude, final int longitude) {
-        when(memberLoader.isExistedMember(anyLong())).thenReturn(true);
-        when(addressLocator.convertToAddress(anyDouble(), anyDouble())).thenReturn(Optional.of(address));
-
-        //when
-        return given().log().all()
-                .contentType(ContentType.JSON)
-                .header("X-Member-Id", memberId)
-                .body(new SaveParkingRequest(latitude, longitude))
-                .when().post("/api/parkings")
-                .then().log().all()
-                .extract();
     }
 
     private static String parseSavedParkingId(final ExtractableResponse<Response> savedParking) {
@@ -152,5 +136,46 @@ public class ParkingAcceptanceTest extends BaseTestWithContainers {
             softAssertions.assertThat(parkingResponse.longitude()).isEqualTo(longitude3);
             softAssertions.assertThat(parkingResponse.address()).isEqualTo(address3);
         });
+    }
+
+    @Test
+    @DisplayName("parking을 저장한다.")
+    void saveParking() {
+        //given
+        final long memberId = 1L;
+        final int latitude = 20;
+        final int longitude = 30;
+        final String address = "address";
+
+        //when
+        final ExtractableResponse<Response> response = saveParking(address, memberId, latitude, longitude);
+
+        //then
+        assertThat(response.statusCode()).isEqualTo(HttpStatus.CREATED.value());
+    }
+
+    private ExtractableResponse<Response> saveParking(final String address, final long memberId, final int latitude, final int longitude) {
+        when(memberLoader.isExistedMember(anyLong())).thenReturn(true);
+        when(addressLocator.convertToAddress(anyDouble(), anyDouble())).thenReturn(Optional.of(address));
+        when(imageUploader.upload(any(MultipartFile.class))).thenReturn("imageName");
+
+        final String request = generateJsonRequest(latitude, longitude);
+
+        return given().log().all()
+                .contentType(MULTIPART)
+                .header("X-Member-Id", memberId)
+                .multiPart("parkingImage", MockParkingImageFile.FILE, "image/webp")
+                .multiPart("saveParkingRequest", request, "application/json")
+                .when().post("/api/parkings")
+                .then().log().all()
+                .extract();
+    }
+
+    private String generateJsonRequest(final int latitude, final int longitude) {
+        try {
+            return objectMapper.writeValueAsString(new SaveParkingRequest(latitude, longitude));
+        } catch (JsonProcessingException exception) {
+            throw new RuntimeException();
+        }
     }
 }

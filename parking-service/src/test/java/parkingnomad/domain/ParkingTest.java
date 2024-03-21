@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test;
 
 import java.time.LocalDateTime;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.SoftAssertions.assertSoftly;
 
 class ParkingTest {
@@ -40,10 +41,11 @@ class ParkingTest {
         int latitude = 20;
         int longitude = 30;
         String address = "address";
+        String image = "image";
         final LocalDateTime date = LocalDateTime.now();
 
         //when
-        Parking parking = Parking.createWithId(id, memberId, latitude, longitude, address, date, date);
+        Parking parking = Parking.createWithId(id, memberId, latitude, longitude, address, image, date, date);
 
         //then
         assertSoftly(softAssertions -> {
@@ -55,5 +57,19 @@ class ParkingTest {
             softAssertions.assertThat(parking.getCreatedAt()).isEqualTo(date);
             softAssertions.assertThat(parking.getUpdatedAt()).isEqualTo(date);
         });
+    }
+
+    @Test
+    @DisplayName("parking에 이미지를 추가한다")
+    void addImage() {
+        //given
+        final Parking parking = Parking.createWithoutId(1L, 20, 30, "address");
+        final String imageName = "imageName";
+
+        //when
+        parking.addImageName(imageName);
+
+        //then
+        assertThat(parking.getImage()).isEqualTo(imageName);
     }
 }

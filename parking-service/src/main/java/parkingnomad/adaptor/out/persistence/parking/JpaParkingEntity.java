@@ -23,6 +23,8 @@ public class JpaParkingEntity {
 
     private String address;
 
+    private String image;
+
     @CreatedDate
     @Column(name = "created_at")
     private LocalDateTime createdAt;
@@ -34,10 +36,11 @@ public class JpaParkingEntity {
     protected JpaParkingEntity() {
     }
 
-    public JpaParkingEntity(final Long memberId, final Point coordinate, final String address) {
+    public JpaParkingEntity(final Long memberId, final Point coordinate, final String address, final String image) {
         this.memberId = memberId;
         this.coordinate = coordinate;
         this.address = address;
+        this.image = image;
     }
 
     public Long getId() {
@@ -54,6 +57,10 @@ public class JpaParkingEntity {
 
     public String getAddress() {
         return address;
+    }
+
+    public String getImage() {
+        return image;
     }
 
     public LocalDateTime getCreatedAt() {

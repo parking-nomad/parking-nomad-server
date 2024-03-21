@@ -10,6 +10,7 @@ public record ParkingResponse(
         double latitude,
         double longitude,
         String address,
+        String image,
         LocalDateTime createdAt,
         LocalDateTime updatedAt
 ) {
@@ -20,6 +21,7 @@ public record ParkingResponse(
                 parking.getLatitude(),
                 parking.getLongitude(),
                 parking.getAddress(),
+                parking.getImage(),
                 parking.getCreatedAt(),
                 parking.getUpdatedAt()
         );

@@ -2,6 +2,7 @@ package parkingnomad.adaptor.in.web;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import parkingnomad.application.port.in.FindLatestParkingByMemberIdUseCase;
 import parkingnomad.application.port.in.FindParkingByIdAndMemberIdUseCase;
 import parkingnomad.application.port.in.SaveParkingUseCase;
@@ -31,9 +32,10 @@ public class ParkingController {
     @PostMapping
     public ResponseEntity<Void> saveParking(
             @AuthMember final Long memberId,
-            @RequestBody final SaveParkingRequest saveParkingRequest
+            @RequestPart final SaveParkingRequest saveParkingRequest,
+            @RequestPart final MultipartFile parkingImage
     ) {
-        final Long savedId = saveParkingUseCase.saveParking(memberId, saveParkingRequest);
+        final Long savedId = saveParkingUseCase.saveParking(memberId, saveParkingRequest, parkingImage);
         return ResponseEntity.created(URI.create("/api/parkings/" + savedId)).build();
     }
 

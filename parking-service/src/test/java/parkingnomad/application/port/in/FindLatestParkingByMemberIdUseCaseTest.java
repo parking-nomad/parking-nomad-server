@@ -35,8 +35,9 @@ class FindLatestParkingByMemberIdUseCaseTest extends BaseTestWithContainers {
         final int latitude = 30;
         final int longitude = 40;
         final String address = "address";
+        final String image = "image";
         final LocalDateTime now = LocalDateTime.now();
-        final Parking parking = Parking.createWithId(id, memberId, latitude, longitude, address, now, now);
+        final Parking parking = Parking.createWithId(id, memberId, latitude, longitude, address, image, now, now);
         latestParkingRepository.saveLatestParking(parking);
 
         //when
@@ -49,6 +50,7 @@ class FindLatestParkingByMemberIdUseCaseTest extends BaseTestWithContainers {
             softAssertions.assertThat(found.latitude()).isEqualTo(latitude);
             softAssertions.assertThat(found.longitude()).isEqualTo(longitude);
             softAssertions.assertThat(found.address()).isEqualTo(address);
+            softAssertions.assertThat(found.image()).isEqualTo(image);
             softAssertions.assertThat(found.createdAt()).isEqualTo(now);
             softAssertions.assertThat(found.updatedAt()).isEqualTo(now);
         });

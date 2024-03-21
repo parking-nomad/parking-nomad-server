@@ -18,6 +18,7 @@ public class JpaParkingMapper {
                 jpaParkingEntity.getCoordinate().getY(),
                 jpaParkingEntity.getCoordinate().getX(),
                 jpaParkingEntity.getAddress(),
+                jpaParkingEntity.getImage(),
                 jpaParkingEntity.getCreatedAt(),
                 jpaParkingEntity.getUpdatedAt()
         );
@@ -26,6 +27,6 @@ public class JpaParkingMapper {
     public JpaParkingEntity toJpaEntity(final Parking parking) {
         final Coordinate coordinate = new Coordinate(parking.getLongitude(), parking.getLatitude());
         final Point point = GEOMETRY_FACTORY.createPoint(coordinate);
-        return new JpaParkingEntity(parking.getMemberId(), point, parking.getAddress());
+        return new JpaParkingEntity(parking.getMemberId(), point, parking.getAddress(), parking.getImage());
     }
 }
