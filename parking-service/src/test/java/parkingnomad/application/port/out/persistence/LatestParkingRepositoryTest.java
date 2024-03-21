@@ -54,4 +54,25 @@ class LatestParkingRepositoryTest extends BaseTestWithContainers {
         //then
         assertThat(latestParkingByMemberId).isEmpty();
     }
+
+    @Test
+    @DisplayName("memberId가 일치하는 latestParking정보를 삭제한다.")
+    void deleteByMemberId() {
+        //given
+        final Long id = 1L;
+        final Long memberId = 2L;
+        final int latitude = 20;
+        final int longitude = 30;
+        final String address = "address";
+        final LocalDateTime now = LocalDateTime.now();
+        final Parking parking = Parking.createWithId(id, memberId, latitude, longitude, address, now, now);
+        latestParkingRepository.saveLatestParking(parking);
+
+        //when
+        latestParkingRepository.deleteLatestParkingByMemberId(memberId);
+
+        //then
+        final Optional<Parking> found = latestParkingRepository.findLatestParkingByMemberId(memberId);
+        assertThat(found).isEmpty();
+    }
 }

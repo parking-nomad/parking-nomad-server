@@ -35,4 +35,9 @@ public class RedisLatestParkingRepository implements LatestParkingRepository {
         }
         return Optional.of(mapper.toDomainEntity(redisEntity));
     }
+
+    @Override
+    public void deleteLatestParkingByMemberId(final Long memberId) {
+        latestParkings.deleteById(memberId);
+    }
 }
