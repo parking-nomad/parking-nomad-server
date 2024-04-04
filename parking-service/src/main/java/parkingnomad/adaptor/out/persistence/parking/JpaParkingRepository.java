@@ -54,4 +54,9 @@ public class JpaParkingRepository implements ParkingRepository {
         }
         return Optional.of(mapper.toDomainEntity(jpaParkingEntity));
     }
+
+    @Override
+    public void deleteById(final Long id) {
+        parkings.deleteById(id);
+    }
 }

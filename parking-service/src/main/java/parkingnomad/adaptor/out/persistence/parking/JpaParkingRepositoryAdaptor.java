@@ -8,4 +8,6 @@ public interface JpaParkingRepositoryAdaptor extends JpaRepository<JpaParkingEnt
     Optional<JpaParkingEntity> findJpaParkingEntityByIdAndMemberId(final Long id, final Long memberId);
 
     Optional<JpaParkingEntity> findFirstByMemberIdOrderByCreatedAtDesc(final Long memberId);
+
+    void deleteByIdAndId(final Long memberId, final Long id);
 }

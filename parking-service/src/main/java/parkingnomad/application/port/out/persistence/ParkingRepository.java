@@ -12,4 +12,6 @@ public interface ParkingRepository {
     Optional<Parking> findByIdAndMemberId(final Long id, final Long memberId);
 
     Optional<Parking> findLatestParkingByMemberId(final Long memberId);
+
+    void deleteById(final Long id);
 }

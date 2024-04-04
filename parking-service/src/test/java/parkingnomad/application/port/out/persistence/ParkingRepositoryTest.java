@@ -12,6 +12,7 @@ import parkingnomad.support.BaseTestWithContainers;
 import java.util.Optional;
 import java.util.stream.Stream;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.SoftAssertions.assertSoftly;
 
 class ParkingRepositoryTest extends BaseTestWithContainers {
@@ -115,5 +116,19 @@ class ParkingRepositoryTest extends BaseTestWithContainers {
             softAssertions.assertThat(parking.getCreatedAt()).isEqualTo(target.getCreatedAt());
             softAssertions.assertThat(parking.getUpdatedAt()).isEqualTo(target.getUpdatedAt());
         });
+    }
+
+    @Test
+    @DisplayName("id가 일치하는 Parking을 삭제한다.")
+    void deleteByIdAndMemberId() {
+        //given
+        final Parking saved = parkingRepository.save(Parking.createWithoutId(1L, 20, 60, "address1"));
+
+        //when
+        parkingRepository.deleteById(saved.getId());
+
+        //then
+        final Optional<Parking> found = parkingRepository.findById(saved.getId());
+        assertThat(found).isEmpty();
     }
 }
