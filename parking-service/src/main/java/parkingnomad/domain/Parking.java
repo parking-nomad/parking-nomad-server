@@ -68,6 +68,10 @@ public class Parking {
         this.image = imageName;
     }
 
+    public boolean isSameId(final Long id) {
+        return this.id.equals(id);
+    }
+
     public double getLatitude() {
         return coordinates.getLatitude();
     }

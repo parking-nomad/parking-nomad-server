@@ -2,8 +2,12 @@ package parkingnomad.domain;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 
 import java.time.LocalDateTime;
+import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.SoftAssertions.assertSoftly;
@@ -71,5 +75,27 @@ class ParkingTest {
 
         //then
         assertThat(parking.getImage()).isEqualTo(imageName);
+    }
+
+    private static Stream<Arguments> provideParkingIdAndExpect() {
+        return Stream.of(
+                Arguments.of(1L, true),
+                Arguments.of(2L, false)
+        );
+    }
+
+    @ParameterizedTest
+    @DisplayName("parking의 id를 비교한다.")
+    @MethodSource("provideParkingIdAndExpect")
+    void isSameId(final Long compareId, final boolean expected) {
+        //given
+        final LocalDateTime now = LocalDateTime.now();
+        final Parking parking = Parking.createWithId(1L, 2L, 20, 30, "address", "image", now, now);
+
+        //when
+        final boolean result = parking.isSameId(compareId);
+
+        //then
+        assertThat(result).isEqualTo(expected);
     }
 }
