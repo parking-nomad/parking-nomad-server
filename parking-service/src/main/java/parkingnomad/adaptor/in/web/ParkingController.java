@@ -3,6 +3,7 @@ package parkingnomad.adaptor.in.web;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import parkingnomad.application.port.in.DeleteParkingUseCase;
 import parkingnomad.application.port.in.FindLatestParkingByMemberIdUseCase;
 import parkingnomad.application.port.in.FindParkingByIdAndMemberIdUseCase;
 import parkingnomad.application.port.in.SaveParkingUseCase;
@@ -18,15 +19,18 @@ public class ParkingController {
     private final SaveParkingUseCase saveParkingUseCase;
     private final FindParkingByIdAndMemberIdUseCase findParkingByIdAndMemberIdUseCase;
     private final FindLatestParkingByMemberIdUseCase findLatestParkingByMemberIdUseCase;
+    private final DeleteParkingUseCase deleteParkingUseCase;
 
     public ParkingController(
             final SaveParkingUseCase saveParkingUseCase,
             final FindParkingByIdAndMemberIdUseCase findParkingByIdAndMemberIdUseCase,
-            final FindLatestParkingByMemberIdUseCase findLatestParkingByMemberIdUseCase
+            final FindLatestParkingByMemberIdUseCase findLatestParkingByMemberIdUseCase,
+            final DeleteParkingUseCase deleteParkingUseCase
     ) {
         this.saveParkingUseCase = saveParkingUseCase;
         this.findParkingByIdAndMemberIdUseCase = findParkingByIdAndMemberIdUseCase;
         this.findLatestParkingByMemberIdUseCase = findLatestParkingByMemberIdUseCase;
+        this.deleteParkingUseCase = deleteParkingUseCase;
     }
 
     @PostMapping
@@ -52,5 +56,11 @@ public class ParkingController {
     public ResponseEntity<ParkingResponse> findLatestParking(@AuthMember final Long memberId) {
         final ParkingResponse response = findLatestParkingByMemberIdUseCase.findLatestParkingByMemberId(memberId);
         return ResponseEntity.ok(response);
+    }
+
+    @DeleteMapping("{id}")
+    public ResponseEntity<Void> deleteParkingById(@PathVariable final Long id, @AuthMember final Long memberId) {
+        deleteParkingUseCase.deleteParking(memberId, id);
+        return ResponseEntity.noContent().build();
     }
 }

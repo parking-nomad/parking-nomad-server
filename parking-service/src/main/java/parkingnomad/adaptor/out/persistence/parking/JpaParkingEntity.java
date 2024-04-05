@@ -1,6 +1,8 @@
 package parkingnomad.adaptor.out.persistence.parking;
 
 import jakarta.persistence.*;
+import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.SQLRestriction;
 import org.locationtech.jts.geom.Point;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
@@ -8,8 +10,12 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDateTime;
 
+import static java.lang.Boolean.FALSE;
+
 @Entity(name = "parkings")
 @EntityListeners(AuditingEntityListener.class)
+@SQLDelete(sql = "UPDATE parkings SET deleted = true WHERE id = ?")
+@SQLRestriction("deleted = false")
 public class JpaParkingEntity {
 
     @Id
@@ -24,6 +30,8 @@ public class JpaParkingEntity {
     private String address;
 
     private String image;
+
+    private boolean deleted = FALSE;
 
     @CreatedDate
     @Column(name = "created_at")
