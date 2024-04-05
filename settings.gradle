@@ -4,4 +4,6 @@ include 'api-gateway'
 include 'member-service'
 include 'common-module'
 include 'parking-service'
+include 'favorite-area-service'
+include 'favorite-area-service'
 
