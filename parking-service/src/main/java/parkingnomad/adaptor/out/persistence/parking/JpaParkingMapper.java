@@ -27,6 +27,7 @@ public class JpaParkingMapper {
     public JpaParkingEntity toJpaEntity(final Parking parking) {
         final Coordinate coordinate = new Coordinate(parking.getLongitude(), parking.getLatitude());
         final Point point = GEOMETRY_FACTORY.createPoint(coordinate);
+        point.setSRID(4326);
         return new JpaParkingEntity(parking.getMemberId(), point, parking.getAddress(), parking.getImage());
     }
 }

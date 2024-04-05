@@ -38,7 +38,7 @@ public class FavoriteArea {
             final double longitudeDelta
     ) {
         final Name name = Name.from(nameValue);
-        final Area area = Area.from(latitude, longitude, latitudeDelta, longitudeDelta);
+        final Area area = Area.of(latitude, longitude, latitudeDelta, longitudeDelta);
         return new FavoriteArea(null, memberId, name, area, null, null);
     }
 
@@ -46,15 +46,11 @@ public class FavoriteArea {
             final Long id,
             final Long memberId,
             final String nameValue,
-            final double latitude,
-            final double longitude,
-            final double latitudeDelta,
-            final double longitudeDelta,
+            final Area area,
             final LocalDateTime createdAt,
             final LocalDateTime updatedAt
     ) {
         final Name name = Name.from(nameValue);
-        final Area area = Area.from(latitude, longitude, latitudeDelta, longitudeDelta);
         return new FavoriteArea(id, memberId, name, area, createdAt, updatedAt);
     }
 

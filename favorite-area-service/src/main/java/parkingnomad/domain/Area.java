@@ -7,11 +7,11 @@ import java.util.List;
 public class Area {
     private final List<Coordinates> coordinates;
 
-    private Area(final List<Coordinates> coordinates) {
+    public Area(final List<Coordinates> coordinates) {
         this.coordinates = coordinates;
     }
 
-    public static Area from(final double latitude, final double longitude, final double latitudeDelta, final double longitudeDelTa) {
+    public static Area of(final double latitude, final double longitude, final double latitudeDelta, final double longitudeDelTa) {
         final double minLatitude = latitude - latitudeDelta;
         final double maxLatitude = latitude + latitudeDelta;
 

@@ -27,7 +27,7 @@ class AreaTest {
         );
 
         //when
-        final Area area = Area.from(latitude, longitude, latitudeDelta, longitudeDelta);
+        final Area area = Area.of(latitude, longitude, latitudeDelta, longitudeDelta);
 
         //then
         assertSoftly(softAssertions -> {
