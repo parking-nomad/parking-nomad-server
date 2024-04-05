@@ -1,4 +1,4 @@
-package parkingnomad.exception;
+package parkingnomad.exception.auth;
 
 import parkingnomad.exception.base.AuthException;
 

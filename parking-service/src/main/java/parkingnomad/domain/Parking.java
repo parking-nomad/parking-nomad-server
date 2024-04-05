@@ -4,6 +4,7 @@ import org.apache.logging.log4j.util.Strings;
 import parkingnomad.exception.InvalidFileNameException;
 import parkingnomad.exception.ParkingErrorCode;
 import parkingnomad.exception.ParkingImageAlreadyExists;
+import parkingnomad.vo.coordinate.Coordinates;
 
 import java.time.LocalDateTime;
 

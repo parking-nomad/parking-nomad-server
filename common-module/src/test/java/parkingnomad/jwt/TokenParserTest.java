@@ -2,8 +2,8 @@ package parkingnomad.jwt;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import parkingnomad.exception.ExpiredAccessTokenException;
-import parkingnomad.exception.InvalidAccessTokenException;
+import parkingnomad.exception.auth.ExpiredAccessTokenException;
+import parkingnomad.exception.auth.InvalidAccessTokenException;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;

@@ -10,7 +10,7 @@ import parkingnomad.application.port.in.usecase.dto.TokenResponse;
 import parkingnomad.application.port.out.persistence.MemberRepository;
 import parkingnomad.application.port.out.persistence.RefreshTokenRepository;
 import parkingnomad.domain.Member;
-import parkingnomad.exception.InvalidRefreshTokenException;
+import parkingnomad.exception.auth.InvalidRefreshTokenException;
 import parkingnomad.exception.member.NonExistentMemberException;
 import parkingnomad.jwt.TokenParser;
 import parkingnomad.support.BaseTestWithContainers;

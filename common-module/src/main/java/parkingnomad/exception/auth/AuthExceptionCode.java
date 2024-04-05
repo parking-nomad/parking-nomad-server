@@ -1,4 +1,4 @@
-package parkingnomad.exception;
+package parkingnomad.exception.auth;
 
 public enum AuthExceptionCode {
     EXPIRED_ACCESS_TOKEN("AUTH0001"),

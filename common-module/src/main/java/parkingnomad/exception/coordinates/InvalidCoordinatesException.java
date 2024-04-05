@@ -1,4 +1,4 @@
-package parkingnomad.exception;
+package parkingnomad.exception.coordinates;
 
 import parkingnomad.exception.base.BadRequestException;
 

@@ -15,7 +15,7 @@ import parkingnomad.domain.Parking;
 import parkingnomad.exception.InvalidMemberIdException;
 import parkingnomad.exception.LocationSearchException;
 
-import static parkingnomad.exception.CoordinatesErrorCode.CANT_FIND_ADDRESS;
+import static parkingnomad.exception.ParkingErrorCode.CANT_FIND_ADDRESS;
 import static parkingnomad.exception.ParkingErrorCode.INVALID_MEMBER_ID;
 
 @Service

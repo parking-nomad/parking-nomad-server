@@ -8,16 +8,16 @@ import io.jsonwebtoken.security.Keys;
 import io.jsonwebtoken.security.SignatureException;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
-import parkingnomad.exception.ExpiredAccessTokenException;
-import parkingnomad.exception.InvalidAccessTokenException;
+import parkingnomad.exception.auth.ExpiredAccessTokenException;
+import parkingnomad.exception.auth.InvalidAccessTokenException;
 
 import javax.crypto.SecretKey;
 import java.nio.charset.StandardCharsets;
 import java.util.Date;
 import java.util.UUID;
 
-import static parkingnomad.exception.AuthExceptionCode.EXPIRED_ACCESS_TOKEN;
-import static parkingnomad.exception.AuthExceptionCode.INVALID_ACCESS_TOKEN;
+import static parkingnomad.exception.auth.AuthExceptionCode.EXPIRED_ACCESS_TOKEN;
+import static parkingnomad.exception.auth.AuthExceptionCode.INVALID_ACCESS_TOKEN;
 
 
 @Component

@@ -11,7 +11,7 @@ import org.springframework.http.server.reactive.ServerHttpResponse;
 import org.springframework.stereotype.Component;
 import org.springframework.web.server.ServerWebExchange;
 import parkingnomad.dto.error.ErrorResponse;
-import parkingnomad.exception.InvalidTokenFormatException;
+import parkingnomad.exception.auth.InvalidTokenFormatException;
 import parkingnomad.exception.base.AuthException;
 import parkingnomad.jwt.TokenParser;
 import reactor.core.publisher.Mono;
@@ -20,7 +20,7 @@ import java.util.List;
 import java.util.Objects;
 
 import static org.springframework.http.MediaType.APPLICATION_JSON;
-import static parkingnomad.exception.AuthExceptionCode.INVALID_TOKEN_FORMAT;
+import static parkingnomad.exception.auth.AuthExceptionCode.INVALID_TOKEN_FORMAT;
 
 @Component
 public class AuthFilter extends AbstractGatewayFilterFactory<AuthFilter.Config> {

@@ -4,7 +4,8 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
-import parkingnomad.exception.InvalidCoordinatesException;
+import parkingnomad.exception.coordinates.InvalidCoordinatesException;
+import parkingnomad.vo.coordinate.Coordinates;
 
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.assertj.core.api.SoftAssertions.assertSoftly;
