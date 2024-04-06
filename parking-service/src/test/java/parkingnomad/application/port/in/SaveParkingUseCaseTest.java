@@ -9,7 +9,7 @@ import parkingnomad.MockParkingImageFile;
 import parkingnomad.application.port.in.dto.SaveParkingRequest;
 import parkingnomad.application.port.out.AddressLocator;
 import parkingnomad.application.port.out.ImageUploader;
-import parkingnomad.application.port.out.MemberLoader;
+import parkingnomad.application.port.out.memberloader.MemberLoader;
 import parkingnomad.application.port.out.persistence.ParkingRepository;
 import parkingnomad.domain.Parking;
 import parkingnomad.exception.InvalidMemberIdException;

@@ -4,5 +4,5 @@ import parkingnomad.application.port.in.dto.CreateFavoriteAreaRequest;
 
 public interface CreateFavoriteAreaUseCase {
 
-    Long createFavoriteArea(final CreateFavoriteAreaRequest createFavoriteAreaRequest);
+    Long createFavoriteArea(final Long memberId, final CreateFavoriteAreaRequest createFavoriteAreaRequest);
 }

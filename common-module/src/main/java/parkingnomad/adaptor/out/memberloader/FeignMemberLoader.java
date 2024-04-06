@@ -1,7 +1,7 @@
 package parkingnomad.adaptor.out.memberloader;
 
 import org.springframework.stereotype.Component;
-import parkingnomad.application.port.out.MemberLoader;
+import parkingnomad.application.port.out.memberloader.MemberLoader;
 import parkingnomad.dto.member.MemberResponse;
 
 import static java.util.Objects.isNull;

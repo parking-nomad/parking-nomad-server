@@ -20,7 +20,7 @@ import parkingnomad.application.port.in.dto.ParkingResponse;
 import parkingnomad.application.port.in.dto.SaveParkingRequest;
 import parkingnomad.application.port.out.AddressLocator;
 import parkingnomad.application.port.out.ImageUploader;
-import parkingnomad.application.port.out.MemberLoader;
+import parkingnomad.application.port.out.memberloader.MemberLoader;
 import parkingnomad.support.BaseTestWithContainers;
 
 import java.util.Optional;

@@ -14,6 +14,12 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
 
+    // openFeign
+    implementation 'org.springframework.cloud:spring-cloud-starter-openfeign'
+
+    // resilience4j
+    implementation 'org.springframework.cloud:spring-cloud-starter-circuitbreaker-resilience4j'
+
     testFixturesImplementation 'org.springframework.boot:spring-boot-starter-web'
     testFixturesImplementation 'org.springframework.boot:spring-boot-starter'
     testFixturesImplementation 'org.springframework.boot:spring-boot-starter-test'
